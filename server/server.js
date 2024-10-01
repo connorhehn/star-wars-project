@@ -13,7 +13,20 @@ dotenv.config();
 const url = process.env.MONGO_DB_URL
 const dbName = process.env.MONGO_DB
 
-// GET Route for /api/planets
+// Character Routes
+app.get('/api/characters', async (req, res) => {
+    try {
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("characters");
+        const characters = await collection.find().toArray();
+        res.status(200).send(characters)
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+// Planet Routes
 app.get('/api/planets', async (req, res) => {
     try {
         res.send("Hello");
@@ -23,6 +36,7 @@ app.get('/api/planets', async (req, res) => {
     }
 });
 
+// Film Routes
 
 // Listening to port
 app.listen(PORT, () => {
