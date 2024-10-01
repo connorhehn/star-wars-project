@@ -123,4 +123,4 @@ app.get('/api/films/:id/planets', async (req, res) => {
 // Listening to port
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-})
+});
