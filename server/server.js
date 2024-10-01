@@ -2,7 +2,6 @@
 import express from 'express';
 
 const app = express();
-app.use(cors()); // enable cors for all routes
 const PORT = 3000;
 
 // GET Route for /api/planets
