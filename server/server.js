@@ -20,7 +20,7 @@ app.get('/api/characters', async (req, res) => {
         const db = client.db(dbName);
         const collection = db.collection("characters");
         const characters = await collection.find().toArray();
-        res.status(200).send(characters)
+        res.status(200).send(characters);
     } catch (e) {
         res.status(500).send("Error Present", e);
     }
@@ -29,12 +29,42 @@ app.get('/api/characters', async (req, res) => {
 // Planet Routes
 app.get('/api/planets', async (req, res) => {
     try {
-        res.send("Hello");
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("planets");
+        const planets = await collection.find().toArray();
+        res.status(200).send(planets);
     } catch (e) {
-        console.log("Error", e);
-        res.status(500).send("There has been an error")
+        res.status(500).send("Error Present", e);
     }
 });
+
+app.get('/api/planets/:id', async (req, res) => {
+    try {
+        const planetid = +req.params.id;
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("planets");
+        const planets = await collection.find({"id": planetid}).toArray();
+        res.status(200).send(planets);
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+app.get('/api/planets/:id/films', async (req, res) => {
+    try {
+        const planetid = +req.params.id;
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("planets");
+        const planets = await collection.find({"id": planetid}).toArray();
+        res.status(200).send(planets);
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
 
 // Film Routes
 
