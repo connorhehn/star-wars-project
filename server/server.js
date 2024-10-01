@@ -37,6 +37,17 @@ app.get('/api/planets', async (req, res) => {
 });
 
 // Film Routes
+app.get('/api/films', async (req, res) => {
+    try {
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("films");
+        const characters = await collection.find().toArray();
+        res.status(200).send(characters)
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
 
 // Listening to port
 app.listen(PORT, () => {
