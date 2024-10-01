@@ -42,12 +42,53 @@ app.get('/api/films', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection("films");
-        const characters = await collection.find().toArray();
+        const films = await collection.find().toArray();
+        res.status(200).send(films)
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+app.get('/api/films/:id', async (req, res) => {
+    try {
+        const filmId = +req.params.id;
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("films");
+        const films = await collection.find({ "id": filmId }).toArray();
+        res.status(200).send(films)
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+app.get('/api/films/:id/characters', async (req, res) => {
+    try {
+        const filmId = +req.params.id;
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("films_characters");
+        const characters = await collection.find({ "film_id": filmId }).toArray();
         res.status(200).send(characters)
     } catch (e) {
         res.status(500).send("Error Present", e);
     }
 });
+
+app.get('/api/films/:id/planets', async (req, res) => {
+    try {
+        const filmId = +req.params.id;
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("films");
+        const films = await collection.find({ "id": filmId }).toArray();
+        res.status(200).send(films)
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+
 
 // Listening to port
 app.listen(PORT, () => {
