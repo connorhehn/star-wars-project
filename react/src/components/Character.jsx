@@ -1,7 +1,9 @@
+import {useParams} from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const Character = () => {
-    const sp = new URLSearchParams(window.location.search)
-    const id = sp.get('id');
+    const {id} = useParams();
+    
     return (
         <>
         <div>Character page for id: {id}</div>

@@ -5,7 +5,7 @@ const Home = () => {
     const [characters, setCharacters] = useState(null);
     const navigate = useNavigate();
     const handleClick = (id) =>{
-        navigate(`/characters?id=${id}`)
+        navigate(`/characters/${id}`)
     }
 
     useEffect(() => {
