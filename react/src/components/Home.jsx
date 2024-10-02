@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const Home = () => {
-    const [characters, setCharacters] = useState(null);
+    const [characters, setCharacters] = useState([]);
     const [searchString, setSearchString] = useState("");
-    const [allCharacters, setAllCharacters] = useState(null);
+    const [allCharacters, setAllCharacters] = useState([]);
     const navigate = useNavigate();
     const handleClick = (id) => {
         navigate(`/characters/${id}`)
@@ -18,14 +18,18 @@ const Home = () => {
                 setAllCharacters(data);
             })
             .catch(err => console.error(err));
-    }, [])
+    }, []);
 
     const handleChange = (e) => {
-        setCharacters(allCharacters);
-        setSearchString(e.target.value);
-        const re = new RegExp(searchString, "i");
-        const matchingCharacters = characters.filter(character => re.test(character.name))
-        setCharacters(matchingCharacters);
+        const value = e.target.value;
+        setSearchString((_value) => value);
+        if (value === '') {
+            setCharacters(allCharacters);
+        } else {
+            const re = new RegExp(searchString, "i");
+            const matchingCharacters = allCharacters.filter(character => re.test(character.name));
+            setCharacters(matchingCharacters);
+        }
     };
 
     return (
@@ -34,7 +38,7 @@ const Home = () => {
                 <h1>Star Wars Universe Lookup</h1>
                 <label htmlFor="searchString">Who you looking for? <span className="small">(Regular expressions are cool
                     here)</span></label>
-                <input id="searchString" onChange={handleChange} autoComplete="off" value={searchString}/>
+                <input id="searchString" onChange={handleChange} autoComplete="off" value={searchString} />
             </div>
             <section id="charactersList">
                 {
