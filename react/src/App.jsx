@@ -1,14 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import Home from './components/Home'
+import Character from './components/Character';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link
+} from "react-router-dom";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/characters")
+      .then(res => res.json())
+      .then(data => setCharacters(data))
+      .catch(err => console.error(err));
+  }, [])
 
   return (
     <>
-      <h1>Star Wars Universe</h1>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Home data={characters}/>}/>
+          <Route exact path="/characters" element={<Character />}/>
+
+        </Routes>
+      </Router>
     </>
   )
 }
