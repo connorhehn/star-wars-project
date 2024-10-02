@@ -94,6 +94,7 @@ h1#name {
 }
 
 section#planets,
+section#home,
 section#species,
 section#characters,
 section#films {
@@ -109,6 +110,7 @@ section#films ul {
 }
 
 section#planets a,
+section#home a,
 section#species a,
 section#characters a,
 section#films a {

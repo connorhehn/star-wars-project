@@ -51,6 +51,10 @@ const Character = () => {
         navigate(`/films/${id}`)
     }
 
+    const handleHomeclick = () => {
+        navigate('/');
+    }
+    
     return (
         <>
             <h1 id="name">{character?.name || 'Loading...'}</h1>
@@ -81,6 +85,12 @@ const Character = () => {
                     })
                     }
                 </ul>
+            </section>
+            <section id="home">
+                <h1>Return Home</h1>
+                <p>
+                <a onClick={() => handleHomeclick()}>Home</a>
+                </p>
             </section>
         </>
     )
