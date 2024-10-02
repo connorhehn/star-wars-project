@@ -9,6 +9,8 @@ import {
 // Components
 import Home from './components/Home'
 import Character from './components/Character';
+import Planet from './components/Planet';
+// import Film from './components/Film'
 
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
           <Route exact path="/" element={<Home />}/>
           <Route exact path="/characters/:id" element={<Character />}/>
           <Route exact path="/planets/:id" element={<Planet />}/>
-          <Route exact path="/films/:id" element={<Films />}/>
+          {/* <Route exact path="/films/:id" element={<Film />}/> */}
         </Routes>
       </Router>
     </>
