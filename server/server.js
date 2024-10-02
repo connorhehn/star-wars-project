@@ -26,6 +26,39 @@ app.get('/api/characters', async (req, res) => {
     }
 });
 
+app.get('/api/characters/:id', async (req, res) => {
+    try {
+        const characterId = +req.params.id
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const collection = db.collection("characters");
+        const character = await collection.findOne({ id: characterId });
+        res.status(200).send(character);
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+app.get('/api/characters/:id/films', async (req, res) => {
+    try {
+        const characterId = +req.params.id
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const filmsCollection = db.collection("films");
+        const filmsCharactersCollection = db.collection("films_characters");
+
+        const filmsCharacters = await filmsCharactersCollection.find({ character_id: characterId }).toArray();
+        const filmsIds = filmsCharacters.map(fc => fc.film_id);
+
+        const films = await filmsCollection.find({ id: { $in: filmsIds } }).toArray();
+
+        res.status(200).send(films);
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+
 // Planet Routes
 app.get('/api/planets', async (req, res) => {
     try {
@@ -97,9 +130,17 @@ app.get('/api/films/:id/characters', async (req, res) => {
         const filmId = +req.params.id;
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
-        const collection = db.collection("films_characters");
-        const characters = await collection.find({ "film_id": filmId }).toArray();
-        res.status(200).send(characters)
+        const films_characters = db.collection("films_characters");
+        const charactersCollection = db.collection("characters");
+
+        // Get all character IDs for the specified film ID
+        const filmCharacters = await films_characters.find({ film_id: filmId }).toArray();
+        const characterIds = filmCharacters.map(fc => fc.character_id);
+
+        // Get character details for those IDs
+        const characters = await charactersCollection.find({ id: { $in: characterIds } }).toArray();
+
+        res.status(200).send(characters);
     } catch (e) {
         res.status(500).send("Error Present", e);
     }
@@ -110,9 +151,17 @@ app.get('/api/films/:id/planets', async (req, res) => {
         const filmId = +req.params.id;
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
-        const collection = db.collection("films");
-        const films = await collection.find({ "id": filmId }).toArray();
-        res.status(200).send(films)
+        const filmsPlanetsCollection = db.collection("films_planets");
+        const planetCollection = db.collection("planets");
+
+        // Get all planet IDs for the specified film ID
+        const filmPLanets = await filmsPlanetsCollection.find({ film_id: filmId }).toArray();
+        const planetIds = filmPLanets.map(fp => fp.planet_id);
+
+        // Get character details for those IDs
+        const planets = await planetCollection.find({ id: { $in: planetIds } }).toArray();
+
+        res.status(200).send(planets)
     } catch (e) {
         res.status(500).send("Error Present", e);
     }
