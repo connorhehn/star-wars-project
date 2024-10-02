@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 const app = express();
 app.use(cors()); // enable cors
+app.use(express.static('./public')); 
 const PORT = 3000;
 
 // Initializing Mongo Client
