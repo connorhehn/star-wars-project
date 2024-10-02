@@ -65,7 +65,7 @@ const Film = () => {
                 <ul id="charactersList">
                     {characters?.map((c) => {
                         return (
-                            <li>
+                            <li key={c.id}>
                                 <a onClick={() => handleCharacterClick(c.id)}>
                                     {c.name}
                                 </a>
@@ -79,7 +79,7 @@ const Film = () => {
                 <ul id="planetsList">
                     {planets?.map((p) => {
                         return (
-                            <li>
+                            <li key={p.id}>
                                 <a onClick={() => handlePlanetClick(p.id)}>
                                     {p.name}
                                 </a>
