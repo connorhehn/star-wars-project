@@ -1,7 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const Film = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [film, setFilm] = useState({});
     const [characters, setCharacters] = useState([]);
@@ -43,6 +44,14 @@ const Film = () => {
         fetchPlanets();
     }, [id]);
 
+    const handlePlanetClick = (id) => {
+        navigate(`/planets/${id}`)
+    }
+
+    const handleCharacterClick = (id) => {
+        navigate(`/characters/${id}`)
+    }
+
     return (
         <>
             <h1 id="name">{film?.title}</h1>
@@ -56,7 +65,11 @@ const Film = () => {
                 <ul id="charactersList">
                     {characters?.map((c) => {
                         return (
-                            <li><a>{c.name}</a></li>
+                            <li>
+                                <a onClick={() => handleCharacterClick(c.id)}>
+                                    {c.name}
+                                </a>
+                            </li>
                         );
                     })}
                 </ul>
@@ -66,7 +79,11 @@ const Film = () => {
                 <ul id="planetsList">
                     {planets?.map((p) => {
                         return (
-                            <li><a>{p.name}</a></li>
+                            <li>
+                                <a onClick={() => handlePlanetClick(p.id)}>
+                                    {p.name}
+                                </a>
+                            </li>
                         );
                     })}
                 </ul>
