@@ -78,7 +78,7 @@ app.get('/api/planets/:id', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection("planets");
-        const planets = await collection.find({"id": planetid}).toArray();
+        const planets = await collection.findOne({"id": planetid});
         res.status(200).send(planets);
     } catch (e) {
         res.status(500).send("Error Present", e);
@@ -87,12 +87,35 @@ app.get('/api/planets/:id', async (req, res) => {
 
 app.get('/api/planets/:id/films', async (req, res) => {
     try {
-        const planetid = +req.params.id;
+        const planetId = +req.params.id;
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
-        const collection = db.collection("planets");
-        const planets = await collection.find({"id": planetid}).toArray();
-        res.status(200).send(planets);
+        const planet_films = db.collection("films_planets");
+        const filmsCollection = db.collection("films");
+
+        // Get all film IDs for the specified planet ID
+        const planetFilms = await planet_films.find({ planet_id: planetId }).toArray();
+        const filmIds = planetFilms.map(pf => pf.film_id);
+
+        // Get film details for those IDs
+        const films = await filmsCollection.find({ id: { $in: filmIds } }).toArray();
+
+        res.status(200).send(films);
+    } catch (e) {
+        res.status(500).send("Error Present", e);
+    }
+});
+
+app.get('/api/planets/:id/characters', async (req, res) => {
+    try {
+        const planetId = +req.params.id;
+        const client = await MongoClient.connect(url);
+        const db = client.db(dbName);
+        const charactersCollection = db.collection("characters");
+
+        // Get all characters for the specified planet ID
+        const planetChar = await charactersCollection.find({ homeworld: planetId }).toArray();
+        res.status(200).send(planetChar);
     } catch (e) {
         res.status(500).send("Error Present", e);
     }
