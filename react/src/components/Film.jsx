@@ -52,6 +52,10 @@ const Film = () => {
         navigate(`/characters/${id}`)
     }
 
+    const handleHomeclick = () => {
+        navigate('/');
+    }
+
     return (
         <>
             <h1 id="name">{film?.title}</h1>
@@ -87,6 +91,12 @@ const Film = () => {
                         );
                     })}
                 </ul>
+            </section>
+            <section id="home">
+                <h1>Return Home</h1>
+                <p>
+                    <a onClick={() => handleHomeclick()}>Home</a>
+                </p>
             </section>
 
         </>

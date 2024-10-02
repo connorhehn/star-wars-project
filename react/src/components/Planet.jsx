@@ -52,6 +52,10 @@ const Planet = () => {
         navigate(`/films/${id}`);
     };
 
+    const handleHomeclick = () => {
+        navigate('/');
+    }
+
     return (
         <>
             <h1 id="name">{planet?.name}</h1>
@@ -85,6 +89,12 @@ const Planet = () => {
                     })
                     }
                 </ul>
+            </section>
+            <section id="home">
+                <h1>Return Home</h1>
+                <p>
+                    <a onClick={() => handleHomeclick()}>Home</a>
+                </p>
             </section>
         </>
     )
