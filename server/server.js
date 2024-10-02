@@ -118,8 +118,8 @@ app.get('/api/films/:id', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection("films");
-        const films = await collection.find({ "id": filmId }).toArray();
-        res.status(200).send(films)
+        const film = await collection.findOne({ "id": filmId });
+        res.status(200).send(film)
     } catch (e) {
         res.status(500).send("Error Present", e);
     }
