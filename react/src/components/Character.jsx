@@ -1,7 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const Character = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [character, setCharacter] = useState({});
     const [planet, setPlanet] = useState({});
@@ -43,9 +44,16 @@ const Character = () => {
         fetchFilms();
     }, [id]);
 
+    const handlePlanetClick = (id) => {
+        navigate(`/planets/${id}`)
+    }
+    const handleFilmClick = (id) => {
+        navigate(`/films/${id}`)
+    }
+
     return (
         <>
-            <h1 id="name">{character?.name}</h1>
+            <h1 id="name">{character?.name || 'Loading...'}</h1>
             <section id="generalInfo">
                 <p>Height: {character?.height} cm</p>
                 <p>Mass: {character?.mass} kg</p>
@@ -53,20 +61,26 @@ const Character = () => {
             </section>
             <section id="planets">
                 <h2>Homeworld</h2>
-                <p>{planet?.name}</p>
+                <p>{ planet?.id ? (
+                    <a onClick={() => handlePlanetClick(planet?.id)}>{planet?.name}</a>
+                ) : <a> Loading...</a>
+                    }
+                </p>
             </section>
             <section id="films">
                 <h2>Films appeared in</h2>
-                <div>
+                <ul>
                     {films?.map(film => {
                         return (
-                            <div>
-                                {film.title}
-                            </div>
+                            <li>
+                                <a onClick={() => handleFilmClick(film.id)}>
+                                    {film.title}
+                                </a>
+                            </li>
                         )
                     })
                     }
-                </div>
+                </ul>
             </section>
         </>
     )
