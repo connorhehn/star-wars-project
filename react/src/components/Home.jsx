@@ -20,13 +20,13 @@ const Home = () => {
             .catch(err => console.error(err));
     }, []);
 
-    const handleChange = (e) => {
+    const handleSearch = (e) => {
         const value = e.target.value;
         setSearchString((_value) => value);
         if (value === '') {
             setCharacters(allCharacters);
         } else {
-            const re = new RegExp(searchString, "i");
+            const re = new RegExp(value, "i");
             const matchingCharacters = allCharacters.filter(character => re.test(character.name));
             setCharacters(matchingCharacters);
         }
@@ -38,7 +38,7 @@ const Home = () => {
                 <h1>Star Wars Universe Lookup</h1>
                 <label htmlFor="searchString">Who you looking for? <span className="small">(Regular expressions are cool
                     here)</span></label>
-                <input id="searchString" onChange={handleChange} autoComplete="off" value={searchString} />
+                <input id="searchString" onChange={handleSearch} autoComplete="off" value={searchString} />
             </div>
             <section id="charactersList">
                 {
