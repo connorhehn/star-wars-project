@@ -19,9 +19,9 @@ const Character = () => {
         };
     };
 
-    const fetchPlanet = async () => {
+    const fetchPlanet = async (planet_id) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/planets/${id}`);
+            const response = await fetch(`http://localhost:3000/api/planets/${planet_id}`);
             const json_response = await response.json();
             setPlanet(json_response);
         } catch (err) {
