@@ -1,7 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const Planet = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [characters, setCharacters] = useState([]);
     const [planet, setPlanet] = useState({});
@@ -41,11 +42,19 @@ const Planet = () => {
         fetchPlanet();
         fetchCharacters();
         fetchFilms();
-    });
+    }), [id];
+
+    const handleCharacterClick = (id) => {
+        navigate(`/characters/${id}`);
+    };
+
+    const handleFilmClick = (id) => {
+        navigate(`/films/${id}`);
+    };
 
     return (
         <>
-            <h1 id="name"></h1>
+            <h1 id="name">{planet?.name}</h1>
             <section id="generalInfo">
                 <p>Climate: {planet?.climate}</p>
                 <p>Terrain: {planet?.terrain}</p>
@@ -53,29 +62,29 @@ const Planet = () => {
             </section>
             <section id="films">
                 <h2>Films appeared in</h2>
-                <div>
+                <ul>
                     {films?.map(film => {
                         return (
-                            <div>
-                                {film.title}
-                            </div>
+                            <li>
+                                <a onClick={() => handleFilmClick(film?.id)}>{film?.title}</a>
+                            </li>
                         )
                     })
                     }
-                </div>
+                </ul>
             </section>
             <section id="characters">
                 <h2>Characters</h2>
-                <div>
+                <ul>
                     {characters?.map(character => {
                         return (
-                            <div>
-                                {character.name}
-                            </div>
+                            <li>
+                                <a onClick={() => handleCharacterClick(character?.id)}>{character?.name}</a>
+                            </li>
                         )
                     })
                     }
-                </div>
+                </ul>
             </section>
         </>
     )

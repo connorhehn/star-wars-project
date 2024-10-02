@@ -72,7 +72,7 @@ const Character = () => {
                 <ul>
                     {films?.map(film => {
                         return (
-                            <li>
+                            <li key={film.id}>
                                 <a onClick={() => handleFilmClick(film.id)}>
                                     {film.title}
                                 </a>
