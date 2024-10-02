@@ -42,7 +42,7 @@ const Planet = () => {
         fetchPlanet();
         fetchCharacters();
         fetchFilms();
-    }), [id];
+    }, [id]);
 
     const handleCharacterClick = (id) => {
         navigate(`/characters/${id}`);
