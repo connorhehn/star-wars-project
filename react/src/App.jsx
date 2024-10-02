@@ -18,7 +18,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />}/>
           <Route exact path="/characters/:id" element={<Character />}/>
-
+          <Route exact path="/planets/:id" element={<Planet />}/>
+          <Route exact path="/films/:id" element={<Films />}/>
         </Routes>
       </Router>
     </>
