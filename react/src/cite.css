@@ -79,6 +79,8 @@ h1#name {
   flex-wrap: wrap;
   justify-content: space-around;
   border: 20px;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
 #generalInfo p {
@@ -107,6 +109,10 @@ section#characters ul,
 section#films ul {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
 }
 
 section#planets a,
