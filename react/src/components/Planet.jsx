@@ -65,7 +65,7 @@ const Planet = () => {
                 <ul>
                     {films?.map(film => {
                         return (
-                            <li>
+                            <li key={film.id}>
                                 <a onClick={() => handleFilmClick(film?.id)}>{film?.title}</a>
                             </li>
                         )
@@ -78,7 +78,7 @@ const Planet = () => {
                 <ul>
                     {characters?.map(character => {
                         return (
-                            <li>
+                            <li key={character.id}>
                                 <a onClick={() => handleCharacterClick(character?.id)}>{character?.name}</a>
                             </li>
                         )
